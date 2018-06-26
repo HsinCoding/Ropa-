@@ -20,6 +20,7 @@
 		E38D29D520E0C03200A0EFD0 /* ClothesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D29D420E0C03200A0EFD0 /* ClothesManager.swift */; };
 		E38D29DD20E0CF6200A0EFD0 /* ClothesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D29DC20E0CF6200A0EFD0 /* ClothesCollectionViewCell.swift */; };
 		E38D29DF20E0D41000A0EFD0 /* WardrobeDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D29DE20E0D41000A0EFD0 /* WardrobeDetailsCollectionViewController.swift */; };
+		E38D29E120E2330C00A0EFD0 /* testForImageUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D29E020E2330C00A0EFD0 /* testForImageUpload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		E38D29D420E0C03200A0EFD0 /* ClothesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesManager.swift; sourceTree = "<group>"; };
 		E38D29DC20E0CF6200A0EFD0 /* ClothesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesCollectionViewCell.swift; sourceTree = "<group>"; };
 		E38D29DE20E0D41000A0EFD0 /* WardrobeDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeDetailsCollectionViewController.swift; sourceTree = "<group>"; };
+		E38D29E020E2330C00A0EFD0 /* testForImageUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testForImageUpload.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				E38D29D420E0C03200A0EFD0 /* ClothesManager.swift */,
 				E38D29D120E0BEF600A0EFD0 /* ClothesManagerDelegate .swift */,
 				E38D29DE20E0D41000A0EFD0 /* WardrobeDetailsCollectionViewController.swift */,
+				E38D29E020E2330C00A0EFD0 /* testForImageUpload.swift */,
 			);
 			path = MyWardrobe;
 			sourceTree = "<group>";
@@ -144,7 +147,7 @@
 				E389050120DCB99000288B57 /* Sources */,
 				E389050220DCB99000288B57 /* Frameworks */,
 				E389050320DCB99000288B57 /* Resources */,
-				884A47EF7CE6161E07FF89D7 /* [CP] Embed Pods Frameworks */,
+				0D97DD6506B82C33CDE82F88 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -203,7 +206,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		884A47EF7CE6161E07FF89D7 /* [CP] Embed Pods Frameworks */ = {
+		0D97DD6506B82C33CDE82F88 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -255,6 +258,7 @@
 				E389050B20DCB99000288B57 /* myWardrobeViewController.swift in Sources */,
 				E389051D20DCDDF500288B57 /* AddNewClothesViewController.swift in Sources */,
 				E38D29DD20E0CF6200A0EFD0 /* ClothesCollectionViewCell.swift in Sources */,
+				E38D29E120E2330C00A0EFD0 /* testForImageUpload.swift in Sources */,
 				E38D299420DFCE3200A0EFD0 /* Clothes.swift in Sources */,
 				E38D29D220E0BEF600A0EFD0 /* ClothesManagerDelegate .swift in Sources */,
 				E38D29D520E0C03200A0EFD0 /* ClothesManager.swift in Sources */,

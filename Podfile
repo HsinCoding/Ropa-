@@ -13,8 +13,4 @@ target 'Ropa' do
  	 pod 'Firebase/Auth'
 
 	 pod 'Firebase/Storage'
-
-
-
-
 end

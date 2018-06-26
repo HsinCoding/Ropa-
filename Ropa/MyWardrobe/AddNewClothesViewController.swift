@@ -9,18 +9,16 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseAuth
-import Firebase
 import FirebaseStorage
+import Firebase
 
 
 class AddNewClothesViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var brandTextField: UITextField!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var colorTextField: UITextField!
-    
     @IBOutlet weak var clothesImageView: UIImageView!
    
     var ref: DatabaseReference?
@@ -28,7 +26,7 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
     // 點選上傳按鈕，可開啟相機及相簿
     @IBAction func selectImageButton(_ sender: Any) {
     
-        
+      
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
@@ -47,16 +45,16 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
                 self.present(imagePickerController, animated: true, completion: nil)
             }
         }
-
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (Void) in
-                imagePickerAlertController.dismiss(animated: true, completion: nil)
-            }
-
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (Void) in
+            imagePickerAlertController.dismiss(animated: true, completion: nil)
+        }
+        
         // 取消
-            imagePickerAlertController.addAction(imageFromLibAction)
-            imagePickerAlertController.addAction(imageFromCameraAction)
-            imagePickerAlertController.addAction(cancelAction)
-
+        imagePickerAlertController.addAction(imageFromLibAction)
+        imagePickerAlertController.addAction(imageFromCameraAction)
+        imagePickerAlertController.addAction(cancelAction)
+        
         present(imagePickerAlertController, animated: true, completion: nil)
     }
     
@@ -69,26 +67,91 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
             print("請填寫內容")
         }
         else {
-//            guard let email = Auth.auth().currentUser?.email else { print("email error"); return }
             
-//            guard let uid = Auth.auth().currentUser?.uid else { print("uid error");return }
-            let uid = "testUid"
-            //作為衣服的編號
-            guard let key = ref?.childByAutoId().key else { return }
             
-            ref?.child("clothes").child(uid).child("\(key)").setValue(["date":"\(dateTextField.text!)","brand":"\(brandTextField.text!)","price":"\(priceTextField.text!)","color":"\(colorTextField.text!)","Like": false])
+            guard let image = self.clothesImageView?.image else { return }
             
-            dateTextField.text = ""
-            brandTextField.text = ""
-            priceTextField.text = ""
-            colorTextField.text = ""
+            guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
             
-            performSegue(withIdentifier: "goToWardrobe", sender: nil)
+            let filename = NSUUID().uuidString
+            
+            Storage.storage().reference().child("profile_images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+                
+                if let err = err {
+                    print("Failed to upload profile image:", err)
+                    return
+                }
+                
+                
+                Storage.storage().reference().child("profile_images").child(filename).downloadURL(completion: { (url, error) in
+                    
+                    // optional biding
+                    guard let url = url else  {
+                        return
+                    }
+                    print("download", error, url)
+                    
+                   
+                    let dic = ["date":"\(self.dateTextField.text!)","brand":"\(self.brandTextField.text!)","price":"\(self.priceTextField.text!)","color":"\(self.colorTextField.text!)","Like": false,"url":"\(url)"] as [String : Any]
+
+                    Database.database().reference().child("clothes").setValue(dic, withCompletionBlock: { (error, ref) in
+                        if let error = error {
+                            print("Failed to ", error)
+                            return
+                        }
+                        print("Successfully")
+                    })
+                })
+
+//                Storage.storage().reference().downloadURL(completion: { (url, error) in
+//
+//                    print("download", error, url)
+//
+//                    if let url = url {
+//                        print("Successfully uploaded profile image:", url)
+//
+//                    }
+//                })
+                
+                
+            
+//                guard let uid = user?.uid else { return }
+//
+//                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl]
+//                let values = [uid: dictionaryValues]
+//
+//                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
+//
+//                    if let err = err {
+//                        print("Failed to save user info into db:", err)
+//                        return
+//                    }
+//
+//                    print("Successfully saved user info to db")
+//
+//                })
+                
+                
+            })
+            
+            
+//           let uid = "testUid"
+//            //作為衣服的編號
+//            guard let key = ref?.childByAutoId().key else { return }
+//
+//            ref?.child("clothes").child(uid).child("\(key)").setValue(["date":"\(dateTextField.text!)","brand":"\(brandTextField.text!)","price":"\(priceTextField.text!)","color":"\(colorTextField.text!)","Like": false])
+////
+//            dateTextField.text = ""
+//            brandTextField.text = ""
+//            priceTextField.text = ""
+//            colorTextField.text = ""
+//
+//            performSegue(withIdentifier: "goToWardrobe", sender: nil)
         }
         
     }
     
-        
+
     @IBAction func cancelButton(_ sender: Any) {
         dateTextField.text = ""
         brandTextField.text = ""
@@ -98,8 +161,6 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
         performSegue(withIdentifier: "goToWardrobe", sender: nil)
         
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,27 +172,75 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+       
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
+        clothesImageView.image = image
+        
+        dismiss(animated: true, completion: nil)
+        
+    }
 
 }
+
+
+
+
+
 //
-//extension AddNewClothesViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        var selectedImageFromPicker: UIImage?
-//        if let pickedimage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            selectedImageFromPicker.image = image
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+////
+////
+////if let selectedImage = selectedImageFromPicker {
+////
+////    let storageRef = Storage.storage().reference().child("clothes").child("\(uniqueString).png")
+////
+////    if let uploadData = UIImagePNGRepresentation(selectedImage) {
+////        storageRef.putData(uploadData, metadata: nil) { (data, error) in
+//            if error != nil {
+//                print("Error: \(error!.localizedDescription)")
+//                return
+//            }
+//
+//            storageRef.downloadURL(completion: { (url, error) in
+//                if error != nil {
+//                    print(error)
+//                    return
+//                }
+//                if url != nil {
+//                    let databaseRef = Database.database().reference().child("clothes").child(uniqueString)
+//                    databaseRef.setValue(url, withCompletionBlock: { (error, dataRef) in
+//                        if error != nil {
+//                            print("Database Error \(error?.localizedDescription)")
+//                        }
+//                        else {
+//                            print("圖片已存")
+//                        }
+//                    })
+//                    self.SetUpUser(Image: url!.absoluteString)
+//                }
+//            })
 //        }
-//        let uniqueString = NSUUID().uuidString
-//        
-//        if let selectedImage = Storage.storage().reference().child("clothes")
-//        
+//
+//
 //    }
-    
-    
-}
-
-
-  
-    
-    
-
+//}
+//
 
