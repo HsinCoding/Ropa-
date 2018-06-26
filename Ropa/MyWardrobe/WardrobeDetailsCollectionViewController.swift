@@ -15,19 +15,22 @@ private let reuseIdentifier = "Cell"
 
 class WardrobeDetailsCollectionViewController: UICollectionViewController{
 
+    var fileUploadDic: [String:Any]?
+    
     var clothing: [Clothes] = []
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-       // self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        let databaseRef = Database.database().reference().child("clothes")
+        databaseRef.observe(.value) { (snapshot) in
+            if let uploadDataDic = snapshot.value as? [String:Any] {
+                
+                self.fileUploadDic = uploadDataDic
+                self.collectionView?.reloadData()
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,17 +38,6 @@ class WardrobeDetailsCollectionViewController: UICollectionViewController{
         // Dispose of any resources that can be recreated.
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -54,20 +46,41 @@ class WardrobeDetailsCollectionViewController: UICollectionViewController{
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return clothing.count
+        if let dataDic = fileUploadDic {
+            return dataDic.count
+        }
+        return 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ClothesCollectionViewCell
         
-        let clothes = clothing[indexPath.row]
-        
-        cell.brandLabel.text = clothes.brand
-        cell.colorLabel.text = clothes.color
-        cell.dateLabel.text = clothes.date
-        cell.priceLabel.text = String(clothes.price)
-    
-    
+        if let dataDic = fileUploadDic {
+            let keyArray = Array(dataDic.keys)
+            if let imageUrlString = dataDic[keyArray[indexPath.row]] as? String {
+                if let imageUrl = URL(string: imageUrlString) {
+                    
+                    URLSession.shared.dataTask(with: imageUrl, completionHandler: { (data, response, error) in
+                        
+                        if error != nil {
+                            
+                            print("Download Image Task Fail: \(error!.localizedDescription)")
+                        }
+                        else if let imageData = data {
+                            
+                            
+                            
+                            
+                            DispatchQueue.main.async {
+                                
+                                cell.imageView.image = UIImage(data: imageData)
+                            }
+                        }
+                        
+                    }).resume()
+                }
+            }
+        }
         return cell
     }
 

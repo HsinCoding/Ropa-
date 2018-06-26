@@ -81,18 +81,18 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
                     print("Failed to upload profile image:", err)
                     return
                 }
+               
                 
-                
-                Storage.storage().reference().child("profile_images").child(filename).downloadURL(completion: { (url, error) in
+            Storage.storage().reference().child("profile_images").child(filename).downloadURL(completion: { (url, error) in
                     
                     // optional biding
                     guard let url = url else  {
                         return
                     }
                     print("download", error, url)
-                    
-                   
-                    let dic = ["date":"\(self.dateTextField.text!)","brand":"\(self.brandTextField.text!)","price":"\(self.priceTextField.text!)","color":"\(self.colorTextField.text!)","Like": false,"url":"\(url)"] as [String : Any]
+                
+                
+                    let dic = ["date":"\(self.dateTextField.text!)","brand":"\(self.brandTextField.text!)","price":"\(self.priceTextField.text!)","color":"\(self.colorTextField.text!)","Like": false,"photoUrl":"\(url)"] as [String : Any]
 
                     Database.database().reference().child("clothes").setValue(dic, withCompletionBlock: { (error, ref) in
                         if let error = error {
@@ -102,53 +102,10 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
                         print("Successfully")
                     })
                 })
-
-//                Storage.storage().reference().downloadURL(completion: { (url, error) in
-//
-//                    print("download", error, url)
-//
-//                    if let url = url {
-//                        print("Successfully uploaded profile image:", url)
-//
-//                    }
-//                })
-                
-                
-            
-//                guard let uid = user?.uid else { return }
-//
-//                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl]
-//                let values = [uid: dictionaryValues]
-//
-//                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
-//
-//                    if let err = err {
-//                        print("Failed to save user info into db:", err)
-//                        return
-//                    }
-//
-//                    print("Successfully saved user info to db")
-//
-//                })
-                
-                
             })
             
-            
-//           let uid = "testUid"
-//            //作為衣服的編號
-//            guard let key = ref?.childByAutoId().key else { return }
-//
-//            ref?.child("clothes").child(uid).child("\(key)").setValue(["date":"\(dateTextField.text!)","brand":"\(brandTextField.text!)","price":"\(priceTextField.text!)","color":"\(colorTextField.text!)","Like": false])
-////
-//            dateTextField.text = ""
-//            brandTextField.text = ""
-//            priceTextField.text = ""
-//            colorTextField.text = ""
-//
-//            performSegue(withIdentifier: "goToWardrobe", sender: nil)
         }
-        
+        performSegue(withIdentifier: "goToWardrobe", sender: nil)
     }
     
 
