@@ -47,6 +47,7 @@ class WardrobeDetailsCollectionViewController: UICollectionViewController{
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let dataDic = fileUploadDic {
+            print("yesssss",dataDic.count)
             return dataDic.count
         }
         return 0
@@ -56,33 +57,76 @@ class WardrobeDetailsCollectionViewController: UICollectionViewController{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ClothesCollectionViewCell
         
         if let dataDic = fileUploadDic {
-            let keyArray = Array(dataDic.keys)
-            if let imageUrlString = dataDic[keyArray[indexPath.row]] as? String {
-                if let imageUrl = URL(string: imageUrlString) {
-                    
-                    URLSession.shared.dataTask(with: imageUrl, completionHandler: { (data, response, error) in
-                        
-                        if error != nil {
-                            
-                            print("Download Image Task Fail: \(error!.localizedDescription)")
-                        }
-                        else if let imageData = data {
-                            
-                            
-                            
-                            
-                            DispatchQueue.main.async {
-                                
-                                cell.imageView.image = UIImage(data: imageData)
+            if let uidDic = dataDic["uid"] as? [String:Any] {
+                print("cccc",uidDic)
+                if let color = uidDic["color"] as? String {
+                    if let date = uidDic["date"] as? String {
+                        if let price = uidDic["price"] as? String {
+                            if let brand = uidDic["brand"] as? String {
+                                if let image = uidDic["ImageUrl"] as? String {
+            
+                                    if let imageUrl = URL(string: image) {
+                                        
+                                        URLSession.shared.dataTask(with: imageUrl, completionHandler: { (data, response, error) in
+                                            if error != nil {
+                                                
+                                                print("Download Image Task Fail: \(error!.localizedDescription)")
+                                            }
+                                            else if let imageData = data {
+                                                
+                                                print("sucesswowowowo",data)
+                                                
+                                                DispatchQueue.main.async {
+                                                    
+                                                    cell.imageView.image = UIImage(data: imageData)
+                                                    cell.brandLabel.text = brand
+                                                    cell.priceLabel.text = price
+                                                    cell.dateLabel.text = date
+                                                    cell.colorLabel.text = color
+                                                    
+                                                }
+                                            }
+                                            
+                                        }).resume()
+                                    }
+
+                                    
+                                }
+                                else {
+                                    //error handing imageUrl as? String
+                                    print("error 1")
+                                }
+                            }
+                            else {
+                                //error handing brand as? String
+                                 print("error 2")
                             }
                         }
-                        
-                    }).resume()
+                        else {
+                            //error handing price as? Int
+                             print("error 3")
+                        }
+ 
+                    }else {
+                        //error handing date as? String
+                         print("error 4")
+                    }
+                    
+                  
+                    
+                }else{
+                    //error handing color as? String
+                     print("error 5")
                 }
+               
+            }else {
+                //error handing dataDic as? [String:Any]
+                print("error 6")
             }
         }
         return cell
     }
+    
 
     // MARK: UICollectionViewDelegate
 

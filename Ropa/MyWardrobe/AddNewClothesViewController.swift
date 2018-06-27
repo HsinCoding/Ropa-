@@ -68,14 +68,13 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
         }
         else {
             
-            
             guard let image = self.clothesImageView?.image else { return }
             
             guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
             
             let filename = NSUUID().uuidString
             
-            Storage.storage().reference().child("profile_images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            Storage.storage().reference().child("Clothes_Image").child("uid").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
                 
                 if let err = err {
                     print("Failed to upload profile image:", err)
@@ -83,7 +82,7 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
                 }
                
                 
-            Storage.storage().reference().child("profile_images").child(filename).downloadURL(completion: { (url, error) in
+            Storage.storage().reference().child("Clothes_Image").child("uid").child(filename).downloadURL(completion: { (url, error) in
                     
                     // optional biding
                     guard let url = url else  {
@@ -92,9 +91,9 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
                     print("download", error, url)
                 
                 
-                    let dic = ["date":"\(self.dateTextField.text!)","brand":"\(self.brandTextField.text!)","price":"\(self.priceTextField.text!)","color":"\(self.colorTextField.text!)","Like": false,"photoUrl":"\(url)"] as [String : Any]
+                    let dic = ["date":"\(self.dateTextField.text!)","brand":"\(self.brandTextField.text!)","price":"\(self.priceTextField.text!)","color":"\(self.colorTextField.text!)","Like": false,"ImageUrl":"\(url)"] as [String : Any]
 
-                    Database.database().reference().child("clothes").setValue(dic, withCompletionBlock: { (error, ref) in
+                    Database.database().reference().child("clothes").child("uid").setValue(dic, withCompletionBlock: { (error, ref) in
                         if let error = error {
                             print("Failed to ", error)
                             return
