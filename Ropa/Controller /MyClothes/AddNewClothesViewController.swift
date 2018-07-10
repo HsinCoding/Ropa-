@@ -72,17 +72,19 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
             
             guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
             
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            
             let filename = NSUUID().uuidString
             
-            Storage.storage().reference().child("Clothes_Image").child("uid").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            Storage.storage().reference().child("Clothes_Image").child("\(uid)").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, error) in
                 
-                if let err = err {
-                    print("Failed to upload profile image:", err)
+                if let error = error {
+                    print("Failed to upload profile image:", error)
                     return
                 }
                
                 
-            Storage.storage().reference().child("Clothes_Image").child("uid").child(filename).downloadURL(completion: { (url, error) in
+            Storage.storage().reference().child("Clothes_Image").child("\(uid)").child(filename).downloadURL(completion: { (url, error) in
                     
                     // optional biding
                     guard let url = url else  {
@@ -93,7 +95,8 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
                 
                     let dic = ["date":"\(self.dateTextField.text!)","brand":"\(self.brandTextField.text!)","price":"\(self.priceTextField.text!)","color":"\(self.colorTextField.text!)","Like": false,"ImageUrl":"\(url)"] as [String : Any]
 
-                    Database.database().reference().child("clothes").child("uid").setValue(dic, withCompletionBlock: { (error, ref) in
+                //存入服飾資料於Firebase
+                    Database.database().reference().child("clothes").child("\(uid)").child("\(filename)").setValue(dic, withCompletionBlock: { (error, ref) in
                         if let error = error {
                             print("Failed to ", error)
                             return
