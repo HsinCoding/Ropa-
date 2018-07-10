@@ -15,7 +15,7 @@ struct Clothes {
     let brand: String
     let color: String
     
-    init(id: String, date: String, price: Int, brand: String, color: String) {
+    init(id:String, date: String, price: Int, brand: String, color: String) {
         self.id = id
         self.date = date
         self.price = price

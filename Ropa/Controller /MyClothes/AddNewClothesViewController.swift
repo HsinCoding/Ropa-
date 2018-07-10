@@ -23,6 +23,7 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
    
     var ref: DatabaseReference?
 
+    
     // 點選上傳按鈕，可開啟相機及相簿
     @IBAction func selectImageButton(_ sender: Any) {
     
@@ -31,14 +32,14 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
         imagePickerController.delegate = self
         
         let imagePickerAlertController = UIAlertController(title: "上傳圖片", message: "請選擇要上傳的圖片", preferredStyle: .actionSheet)
-        //開啟相簿
+        
         let imageFromLibAction = UIAlertAction(title: "照片圖庫", style: .default) { (Void) in
             if UIImagePickerController.isSourceTypeAvailable( .photoLibrary) {
                 imagePickerController.sourceType = .photoLibrary
                 self.present(imagePickerController, animated: true, completion: nil)
             }
         }
-        // 開啟相機
+        
         let imageFromCameraAction = UIAlertAction(title: "相機", style: .default) { (Void) in
             if UIImagePickerController.isSourceTypeAvailable( .camera) {
                 imagePickerController.sourceType = .camera
@@ -50,7 +51,6 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
             imagePickerAlertController.dismiss(animated: true, completion: nil)
         }
         
-        // 取消
         imagePickerAlertController.addAction(imageFromLibAction)
         imagePickerAlertController.addAction(imageFromCameraAction)
         imagePickerAlertController.addAction(cancelAction)
@@ -121,12 +121,10 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -146,57 +144,5 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
 
 
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-////
-////
-////if let selectedImage = selectedImageFromPicker {
-////
-////    let storageRef = Storage.storage().reference().child("clothes").child("\(uniqueString).png")
-////
-////    if let uploadData = UIImagePNGRepresentation(selectedImage) {
-////        storageRef.putData(uploadData, metadata: nil) { (data, error) in
-//            if error != nil {
-//                print("Error: \(error!.localizedDescription)")
-//                return
-//            }
-//
-//            storageRef.downloadURL(completion: { (url, error) in
-//                if error != nil {
-//                    print(error)
-//                    return
-//                }
-//                if url != nil {
-//                    let databaseRef = Database.database().reference().child("clothes").child(uniqueString)
-//                    databaseRef.setValue(url, withCompletionBlock: { (error, dataRef) in
-//                        if error != nil {
-//                            print("Database Error \(error?.localizedDescription)")
-//                        }
-//                        else {
-//                            print("圖片已存")
-//                        }
-//                    })
-//                    self.SetUpUser(Image: url!.absoluteString)
-//                }
-//            })
-//        }
-//
-//
-//    }
-//}
-//
+
 
