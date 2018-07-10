@@ -76,7 +76,8 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
             
             let filename = NSUUID().uuidString
             
-            Storage.storage().reference().child("Clothes_Image").child("\(uid)").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, error) in
+            //存圖片於Firebase
+            Storage.storage().reference().child("Clothes_Image").child("\(uid)").child("\(filename)").putData(uploadData, metadata: nil, completion: { (metadata, error) in
                 
                 if let error = error {
                     print("Failed to upload profile image:", error)
@@ -84,7 +85,7 @@ class AddNewClothesViewController: UIViewController, UIImagePickerControllerDele
                 }
                
                 
-            Storage.storage().reference().child("Clothes_Image").child("\(uid)").child(filename).downloadURL(completion: { (url, error) in
+            Storage.storage().reference().child("Clothes_Image").child("\(uid)").child("\(filename)").downloadURL(completion: { (url, error) in
                     
                     // optional biding
                     guard let url = url else  {

@@ -23,7 +23,10 @@ class ClothesListCollectionViewController: UICollectionViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let databaseRef = Database.database().reference().child("clothes")
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let filename = NSUUID().uuidString
+
+        let databaseRef = Database.database().reference().child("clothes").child(uid).child("\(filename)")
         databaseRef.observe(.value) { (snapshot) in
             if let uploadDataDic = snapshot.value as? [String:Any] {
                 
