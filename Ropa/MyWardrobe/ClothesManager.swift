@@ -19,32 +19,73 @@ class ClothesManager {
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             
             for key in dictionary.keys {
-                if let brand = dictionary["brand"] as? String {
-                    if let color = dictionary["color"] as? String {
-                        if let date = dictionary["date"] as? String {
-                            if let price = dictionary["price"] as? Int {
-                                let clothes = Clothes.init(id: key, date: date, price: price, brand: brand, color: color)
-                                clothing.append(clothes)
+                if let valueDictionary = dictionary["\(key)"] as? [String: Any] {
+                    if let brand = valueDictionary["brand"] as? String {
+                        if let color = valueDictionary["color"] as? String {
+                            if let date = valueDictionary["date"] as? String {
+                                if let price = valueDictionary["price"] as? Int {
+                                    let clothes = Clothes.init(date: date, price: price, brand: brand, color: color)
+                                    
+                                    clothing.append(clothes)
+                                    self.delegate?.manager(self, didfetch: clothing)
+                                }
+                                else {
+                                    //error handing
+                                    print("Price without value or String can't be wrapped ")
+                                }
                             }
                             else {
                                 //error handing
-                                print("The price can't wrap into Int")
+                                print("Date without value or String can't be wrapped")
                             }
                         }
                         else {
                             //error handing
-                            print("The date can't wrap into String")
+                            print("Color without value or String can't be wrapped")
                         }
+                        
                     }
                     else {
                         //error handing
-                        print("The color can't wrap into String")
+                        print("Brand without value or String can't be wrapped ")
                     }
+                    
                 }
                 else {
                     //error handing
-                    print("The brand can't wrap into String")
+                    print("Dictionary without value or can't be wrapped")
                 }
+                
+                
+                
+                
+                
+//                if let brand = dictionary["brand"] as? String {
+//                    if let color = dictionary["color"] as? String {
+//                        if let date = dictionary["date"] as? String {
+//                            if let price = dictionary["price"] as? Int {
+//                                let clothes = Clothes.init(id: key, date: date, price: price, brand: brand, color: color)
+//                                clothing.append(clothes)
+//                            }
+//                            else {
+//                                //error handing
+//                                print("The price can't wrap into Int")
+//                            }
+//                        }
+//                        else {
+//                            //error handing
+//                            print("The date can't wrap into String")
+//                        }
+//                    }
+//                    else {
+//                        //error handing
+//                        print("The color can't wrap into String")
+//                    }
+//                }
+//                else {
+//                    //error handing
+//                    print("The brand can't wrap into String")
+//                }
             }
             
             

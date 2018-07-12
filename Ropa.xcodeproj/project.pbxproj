@@ -12,6 +12,7 @@
 		E36385B920F3019600FB81AC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36385B820F3019600FB81AC /* LoginViewController.swift */; };
 		E36385BB20F30D4800FB81AC /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36385BA20F30D4800FB81AC /* SigninViewController.swift */; };
 		E36385BF20F476AC00FB81AC /* ClothesListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36385BE20F476AC00FB81AC /* ClothesListCollectionViewController.swift */; };
+		E363867820F7286300FB81AC /* ClothesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E363867720F7286300FB81AC /* ClothesListViewController.swift */; };
 		E389050920DCB99000288B57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E389050820DCB99000288B57 /* AppDelegate.swift */; };
 		E389050B20DCB99000288B57 /* myWardrobeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E389050A20DCB99000288B57 /* myWardrobeViewController.swift */; };
 		E389050E20DCB99000288B57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E389050C20DCB99000288B57 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 		E36385B820F3019600FB81AC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E36385BA20F30D4800FB81AC /* SigninViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninViewController.swift; sourceTree = "<group>"; };
 		E36385BE20F476AC00FB81AC /* ClothesListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesListCollectionViewController.swift; sourceTree = "<group>"; };
+		E363867720F7286300FB81AC /* ClothesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesListViewController.swift; sourceTree = "<group>"; };
 		E389050520DCB99000288B57 /* Ropa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ropa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E389050820DCB99000288B57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E389050A20DCB99000288B57 /* myWardrobeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myWardrobeViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				E389051C20DCDDF500288B57 /* AddNewClothesViewController.swift */,
 				E36385BE20F476AC00FB81AC /* ClothesListCollectionViewController.swift */,
 				E3EE737020E4C04000B41B20 /* ClothesDetailsViewController.swift */,
+				E363867720F7286300FB81AC /* ClothesListViewController.swift */,
 			);
 			path = MyClothes;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E36385B920F3019600FB81AC /* LoginViewController.swift in Sources */,
+				E363867820F7286300FB81AC /* ClothesListViewController.swift in Sources */,
 				E389050B20DCB99000288B57 /* myWardrobeViewController.swift in Sources */,
 				E389051D20DCDDF500288B57 /* AddNewClothesViewController.swift in Sources */,
 				E36385BB20F30D4800FB81AC /* SigninViewController.swift in Sources */,

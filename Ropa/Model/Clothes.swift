@@ -9,14 +9,14 @@
 import Foundation
 
 struct Clothes {
-    let id: String
+
     let date: String
     let price: Int
     let brand: String
     let color: String
     
-    init(id:String, date: String, price: Int, brand: String, color: String) {
-        self.id = id
+    init( date: String, price: Int, brand: String, color: String) {
+
         self.date = date
         self.price = price
         self.brand = brand

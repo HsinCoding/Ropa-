@@ -13,27 +13,48 @@ import FirebaseAuth
 
 private let reuseIdentifier = "Cell"
 
-class ClothesListCollectionViewController: UICollectionViewController{
+class ClothesListCollectionViewController: UICollectionViewController,ClotheseManagerDelegate{
+    
     
     var fileUploadDic: [String:Any]?
     
-    var clothing: [Clothes] = []
     
+    var clothing: [Clothes] = []
+    var ref: DatabaseReference?
+    
+    
+    
+    func manager(_ manager: ClothesManager, didfetch Clothing: [Clothes]) {
+        clothing = Clothing
+        self.collectionView?.reloadData()
+    }
+    
+    func manager(_ manager: ClothesManager, didFaithWith error: Error) {
+        // skip
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let filename = NSUUID().uuidString
-
-        let databaseRef = Database.database().reference().child("clothes").child(uid).child("\(filename)")
-        databaseRef.observe(.value) { (snapshot) in
-            if let uploadDataDic = snapshot.value as? [String:Any] {
-                
-                self.fileUploadDic = uploadDataDic
-                self.collectionView?.reloadData()
-            }
-        }
+        
+        
+        
+        
+        
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        let filename = NSUUID().uuidString
+//
+//        let databaseRef = Database.database().reference().child("clothes").child(uid).child("\(filename)")
+//        databaseRef.observe(.value) { (snapshot) in
+//            if let uploadDataDic = snapshot.value as? [String:Any] {
+//                print("success")
+//                self.fileUploadDic = uploadDataDic
+//                self.collectionView?.reloadData()
+//            }
+//            else {
+//                print("Fail")
+//            }
+//        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,86 +78,21 @@ class ClothesListCollectionViewController: UICollectionViewController{
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ClothesCollectionViewCell
         
-        if let dataDic = fileUploadDic {
-            if let uidDic = dataDic["uid"] as? [String:Any] {
-                print("cccc",uidDic)
-                if let color = uidDic["color"] as? String {
-                    if let date = uidDic["date"] as? String {
-                        if let price = uidDic["price"] as? String {
-                            if let brand = uidDic["brand"] as? String {
-                                if let image = uidDic["ImageUrl"] as? String {
-                                    
-                                    if let imageUrl = URL(string: image) {
-                                        
-                                        URLSession.shared.dataTask(with: imageUrl, completionHandler: { (data, response, error) in
-                                            if error != nil {
-                                                
-                                                print("Download Image Task Fail: \(error!.localizedDescription)")
-                                            }
-                                            else if let imageData = data {
-                                                
-                                                print("sucesswowowowo",data)
-                                                
-                                                DispatchQueue.main.async {
-                                                    
-                                                    cell.imageView.image = UIImage(data: imageData)
-                                                    cell.brandLabel.text = brand
-                                                    cell.priceLabel.text = price
-                                                    cell.dateLabel.text = date
-                                                    cell.colorLabel.text = color
-                                                    
-                                                }
-                                            }
-                                            
-                                        }).resume()
-                                    }
-                                    
-                                    
-                                }
-                                else {
-                                    //error handing imageUrl as? String
-                                    print("error 1")
-                                }
-                            }
-                            else {
-                                //error handing brand as? String
-                                print("error 2")
-                            }
-                        }
-                        else {
-                            //error handing price as? Int
-                            print("error 3")
-                        }
-                        
-                    }else {
-                        //error handing date as? String
-                        print("error 4")
-                    }
-                    
-                    
-                    
-                }else{
-                    //error handing color as? String
-                    print("error 5")
-                }
-                
-            }else {
-                //error handing dataDic as? [String:Any]
-                print("error 6")
-            }
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ClothesCollectionViewCell
+      
+        let clothes = clothing[indexPath.row]
+        cell.brandLabel.text = clothes.brand
+        cell.colorLabel.text = clothes.color
+        cell.dateLabel.text = clothes.date
+        cell.priceLabel.text = String(clothes.price)
+        
+        
         return cell
     }
     
     
-    func manager(_ manager: ClothesManager, didfetch Clothes:[Clothes]){
-        
-        self.clothing = Clothes
-        
-        
-    }
+   
     
     
     
