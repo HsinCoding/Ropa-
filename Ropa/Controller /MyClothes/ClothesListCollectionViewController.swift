@@ -18,7 +18,6 @@ class ClothesListCollectionViewController: UICollectionViewController,ClotheseMa
     
     var fileUploadDic: [String:Any]?
     
-    
     var clothing: [Clothes] = []
     var ref: DatabaseReference?
     
@@ -73,6 +72,7 @@ class ClothesListCollectionViewController: UICollectionViewController,ClotheseMa
         if let dataDic = fileUploadDic {
             print("yesssss",dataDic.count)
             return dataDic.count
+            print("jjjj",dataDic.count)
         }
         return 0
     }

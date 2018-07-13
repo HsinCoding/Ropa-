@@ -115,9 +115,9 @@
 			isa = PBXGroup;
 			children = (
 				E389051C20DCDDF500288B57 /* AddNewClothesViewController.swift */,
-				E36385BE20F476AC00FB81AC /* ClothesListCollectionViewController.swift */,
 				E3EE737020E4C04000B41B20 /* ClothesDetailsViewController.swift */,
 				E363867720F7286300FB81AC /* ClothesListViewController.swift */,
+				E36385BE20F476AC00FB81AC /* ClothesListCollectionViewController.swift */,
 			);
 			path = MyClothes;
 			sourceTree = "<group>";
